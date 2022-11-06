@@ -12,12 +12,17 @@ class Server {
     //Http Server
     this.server = http.createServer(this.app);
     //Configuracion de sockets
-    this.io = socketio(this.server);
+    this.io = socketio(this.server, {
+      cors: {
+        origin: "*",
+        methods: ["GET", "POST"],
+      },
+    });
   }
   middlewares() {
     //Desplegar el directorio publico
     this.app.use(express.static(path.resolve(__dirname, "../public")));
-    this.app.use(cors());
+    // this.app.use(cors());
   }
 
   configurarSockets() {
